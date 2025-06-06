@@ -1,54 +1,59 @@
-# React + TypeScript + Vite
+# ♻️ Skip Selector App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React app that allows users to select a skip based on their location and needs. This project is an improved redesign of the skip selection interface used by [WeWantWaste.co.uk](https://wewantwaste.co.uk), with a responsive and modern design.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- ✅ Dynamic display of available skips via an **external REST API**
+- ✅ Responsive card component (`<SkipCard />`) with visual selection effect
+- ✅ Action banner fixed to the bottom of the screen on mobile after selection
+- ✅ Step-by-step navigation system in a clear `Header` (Postcode, Waste Type, etc.)
+- ✅ Modern UI with **TailwindCSS**, **React**, and **Lucide Icons**
+- ✅ Smooth and intuitive behavior on mobile and desktop
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
+##🎨 Improved Design
+* In the header, the sections passed or crossed have been changed to blue instead of having only the icon colored, and a visual effect has been added when hovering over the header elements. We wanted it to be on a black background for a clean, simple, yet clear design.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+* For the cards, we added a scale effect and a bit of dark gray on hover, and we set them to a black color that differs from the parent container's font to make our cards even more visible and attractive.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+* We could still improve the design a lot, but due to time constraints, we're only doing this.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🧱 Technical Stack
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- **React 18+** with Hooks
+- **TypeScript** for type safety
+- **TailwindCSS** for fast and responsive design
+- **Lucide-react** for elegant and modular icons
+- **Fetch API** to retrieve data from a dynamic URL
+
+---
+
+## 🧠 Approach & Structure
+
+The project is organized around component logic:
+
+- `ChooseSkipPage.tsx`: Main component, retrieves data and displays the grid. SkipCards.
+- SkipCard.tsx : Displays the details of each skip (size, price, options).
+- Header.tsx : Progress bar at the top of the page.
+- Action banner **fixed to the bottom on mobile** that appears as soon as an item is selected (with a back and continue button).
+
+---
+
+## 📱 Responsive Design
+
+- Adaptive text automatically hides on mobile, leaving only the icons.
+- The action banner is fixed bottom-0 and only visible when a skip is selected.
+- Adaptive grid: 1 column on mobile, 2 columns on tablet, 3 columns on desktop.
+
+---
+
+## 🛠️ Launch the project locally
+
+```bash
+git clone https://github.com/ton-user/skip-selector-app.git
+cd skip-selector-app
+npm install
+npm run dev
