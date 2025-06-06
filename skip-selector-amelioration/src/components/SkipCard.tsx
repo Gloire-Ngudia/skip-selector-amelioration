@@ -1,5 +1,5 @@
 import React from "react"
-import {ArrowRight} from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
 type Skip = {
   id: number
@@ -22,46 +22,56 @@ const getImageBySize = (size: number) => {
 type SkipCardProps = {
   skip: Skip
   onSelect: (skip: Skip) => void
+  isSelected: boolean
 }
 
-const SkipCard: React.FC<SkipCardProps> = ({ skip, onSelect }) => {
+const SkipCard: React.FC<SkipCardProps> = ({ skip, onSelect, isSelected }) => {
   const totalPrice = (skip.price_before_vat * (1 + skip.vat / 100)).toFixed(2)
 
   return (
-    <button
+    <div
       onClick={() => onSelect(skip)}
-      className="w-full"
+      className={`w-[420px] min-h-[480px] rounded-2xl shadow-md overflow-hidden flex flex-col transition duration-300 transform cursor-pointer
+        ${isSelected
+          ? "bg-gray-950 ring-2 ring-blue-600 scale-105"
+          : "bg-black ring-2 ring-gray-900 hover:scale-105 hover:bg-gray-950 hover:ring-blue-600"}`}
     >
-      <div className="w-[420px] min-h-[480px] bg-black rounded-2xl ring-2 ring-gray-900 shadow-md overflow-hidden flex flex-col transition duration-300 transform hover:scale-105 hover:bg-gray-950 hover:ring-2 hover:ring-blue-600 focus:outline-none cursor-pointer">
-        <div className="relative">
+      {/* Image + Badge */}
+      <div className="relative">
         <img
           src={getImageBySize(skip.size)}
           alt={`Benne ${skip.size} yards`}
           className="h-60 w-96 object-cover justify-center mx-auto mt-4 rounded-2xl"
-         
         />
-        {/* Le badge bleu en haut à gauche */}
-          <div className="absolute top-8 right-7 bg-blue-600 text-white text-base font-semibold px-4 py-2 rounded-full shadow">
-            {skip.size} Yards
-          </div>
-        </div>
-
-        <div className="p-4 flex flex-col justify-start flex-grow text-start text-white">
-          <h2 className="text-3xl font-bold mb-2">{skip.size} Yard Skip</h2>
-          <ul className="text-base text-gray-400">
-            <li>{skip.hire_period_days} day hire period</li>
-          </ul>
-
-          <div className="mt-auto">
-            <p className="text-blue-600 font-bold text-3xl mb-6">£{totalPrice}</p>
-           <button className="mt-2 w-full h-14 bg-gray-900 hover:bg-gray-800 text-white py-2 rounded-xl transition flex flex-row items-center justify-center space-x-2">
-                <span className="text-xl font-semibold leading-none">Select This Skip</span>
-                <ArrowRight className="w-5 h-5 stroke-[3]" />
-            </button>
-          </div>
+        <div className="absolute top-8 right-7 bg-blue-600 text-white text-base font-semibold px-4 py-2 rounded-full shadow">
+          {skip.size} Yards
         </div>
       </div>
-    </button>
+
+      {/* Détails */}
+      <div className="p-4 flex flex-col justify-start flex-grow text-start text-white">
+        <h2 className="text-3xl font-bold mb-2">{skip.size} Yard Skip</h2>
+        <ul className="text-base text-gray-400">
+          <li>{skip.hire_period_days} day hire period</li>
+        </ul>
+
+        {/* Prix + Bouton */}
+        <div className="mt-auto">
+          <p className="text-blue-600 font-bold text-3xl mb-6">£{totalPrice}</p>
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              onSelect(skip)
+            }}
+            className={`mt-2 w-full h-14 text-white py-2 rounded-xl transition flex flex-row items-center justify-center space-x-2 text-xl font-semibold leading-none
+              ${isSelected ? "bg-blue-600 hover:bg-blue-700 ring-0" : "bg-gray-900 hover:bg-gray-800 ring-0"}`}
+          >
+            <span>{isSelected ? "Selected" : "Select This Skip"}</span>
+            <ArrowRight className="w-5 h-5 stroke-[3]" />
+          </button>
+        </div>
+      </div>
+    </div>
   )
 }
 
